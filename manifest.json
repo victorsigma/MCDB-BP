@@ -1,0 +1,31 @@
+{
+	"format_version": 2,
+	"header": {
+		"uuid": "bda0d74b-cd2b-4dc3-b5e4-82c76e98aa48",
+		"name": "MCDB BP",
+		"description": "MCDB BP",
+		"version": [1, 0, 0],
+		"min_engine_version": [ 1, 19, 50 ]
+	},
+	"modules": [
+		{
+			"uuid": "225f971d-a76e-4847-adc2-53546ff62eb4",
+			"type": "data",
+			"description": "MCDB BP",
+			"version": [1, 0, 0]
+		},
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "4d096a61-71ae-43f4-a2e6-7f4b2e6d0039",
+            "entry": "scripts/index.js",
+            "version": [ 1, 0, 0 ]
+        }
+	],
+	"dependencies": [
+		{
+            "module_name": "@minecraft/server",
+            "version": "1.4.0-beta"
+        }
+	]
+}
