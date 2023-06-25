@@ -1,7 +1,8 @@
 import { INVALID_QUERY, INVALID_DB, DB, TABLE } from './commonResponses'
+import { querySplits } from './databaseUtils';
 
 export const create = (query, player) => {
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
 
     if (querySplit[1] === DB) {
         if (querySplit.length === 3) {
@@ -121,7 +122,7 @@ const isValidProperties = (properties) => {
 };
 
 export const alter = (query, player) => {
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
     if (querySplit.length >= 3) {
         const dbName = querySplit[1];
         const tableName = querySplit[2];
@@ -156,7 +157,7 @@ export const alter = (query, player) => {
 };
 
 export const drop = (query, player) => {
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
     if (querySplit[1] === DB) {
         if (querySplit.length === 3) {
             const dbName = querySplit[2];

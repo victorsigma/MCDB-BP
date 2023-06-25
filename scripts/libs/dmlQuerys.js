@@ -1,14 +1,15 @@
 import { INVALID_QUERY, INVALID_DB } from './commonResponses';
+import { querySplits } from './databaseUtils';
 import { tableExists } from "./ddlQuerys";
 
 export const insert = (query, player) => {
     //&insert dbName tableName value
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
     if (querySplit.length > 3) {
         const dbName = querySplit[1];
         const tableName = querySplit[2];
         const rawValue = querySplit[3];
-        const value = rawValue.replace(/_/g, " "); // Reemplazar el signo "_" por un espacio
+        const value = rawValue;
 
         if (tableExists(dbName, tableName, player)) {
             const tableProperties = getTableProperties(dbName, tableName, player);
@@ -70,12 +71,12 @@ const validateValue = (value, tableProperties) => {
 
 export const update = (query, player) => {
     // &update dbName tableName conditions newValues
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
     if (querySplit.length > 4) {
         const dbName = querySplit[1];
         const tableName = querySplit[2];
-        const conditions = JSON.parse(querySplit[3].replace(/_/g, " "));
-        const newValues = JSON.parse(querySplit[4].replace(/_/g, " "));
+        const conditions = JSON.parse(querySplit[3]);
+        const newValues = JSON.parse(querySplit[4]);
 
         if (tableExists(dbName, tableName, player)) {
             const tableTags = player.getTags().filter((tag) => tag.startsWith(`db:${dbName}-tbl:${tableName}-value:`));
@@ -134,12 +135,12 @@ const updateJSON = (json1, json2) => {
 
 export const delet = (query, player) => {
     //&delete dbName tableName datos
-    const querySplit = query.split(" ");
+    const querySplit = querySplits(query);
     if (querySplit.length > 3) {
         const dbName = querySplit[1];
         const tableName = querySplit[2];
         const rawValues = querySplit.slice(3);
-        const values = rawValues.map((rawValue) => rawValue.replace(/_/g, " ")); // Reemplazar el signo "_" por un espacio
+        const values = rawValues.map((rawValue) => rawValue);
 
         if (tableExists(dbName, tableName, player)) {
             let deletedCount = 0;

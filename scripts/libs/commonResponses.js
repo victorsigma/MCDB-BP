@@ -12,7 +12,7 @@ export const DDL = `§gDDL Syntax:
 §b&drop §5database §cdatabase_name
 §b&drop §5table §edatabase_owner_name §ctable_name`;
 export const DQL =`§gDQL Syntax:
-§b&select §edatabase_owner_name §ctable_name §cconditions? §eprojection?`;
+§b&select §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?`;
 export const DML = `§gDML Syntax:
 §b&insert §edatabase_owner_name §ctable_name §evalue
 §b&update §edatabase_owner_name §ctable_name §cconditions §enew_values

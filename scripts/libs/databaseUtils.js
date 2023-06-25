@@ -24,3 +24,25 @@ export const getTables = (query, player) => {
         return INVALID_DB;
     }
 };
+
+
+const extractJsons = (query) => {
+    const jsonRegex = /({[^{}]+})/g;
+    const jsons = query.match(jsonRegex);
+    const modifiedQuery = query.replace(jsonRegex, '###'); // Reemplazar los JSON con un marcador ###
+
+    return {
+        modifiedQuery,
+        jsons
+    };
+};
+
+export const querySplits = (query) => {
+    const { modifiedQuery, jsons } = extractJsons(query);
+    const split = modifiedQuery.split(' ');
+
+    // Restaurar los JSON reemplazados en la lista dividida
+    const finalSplit = split.map((item) => (item === '###' ? jsons.shift() : item));
+
+    return finalSplit;
+};
