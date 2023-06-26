@@ -1,4 +1,4 @@
-import { DB, INVALID_DB } from "./commonResponses";
+import { INVALID_DB } from "./commonResponses";
 
 // Obtener las bases de datos existentes
 export const getDatabases = (player) => {

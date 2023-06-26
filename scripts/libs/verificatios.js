@@ -23,7 +23,8 @@ const dqlCommandsQuerys = {
      * @param {*} query 
      * @param {Player} player 
      */
-    "&select": (query, player) => { return select(query, player)}
+    "&select": (query, player) => { return select(query, player)}/* ,
+    "&join": (query, player) => { return join(query, player)} */
 }
 Object.freeze(dqlCommandsQuerys);
 const ddlCommandsQuerys = {
@@ -70,7 +71,7 @@ export const queryCommanValidation = (query) => {
 
 export const determineQuery = (query, player) => {
     const dmlCommands = ["&insert", "&update", "&delete"];
-    const dqlCommands = ["&select"];
+    const dqlCommands = ["&select"/* , "&join" */];
     const ddlCommands = ["&create", "&alter", "&drop"];
     const helpCommands = ["&dml", "&dql", "&ddl", "&dul"];
     const utilsCommands = ['&databases', "&tables"]
