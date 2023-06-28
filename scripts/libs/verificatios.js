@@ -2,7 +2,7 @@ import { Player } from "@minecraft/server"
 import { alter, create, drop } from "./ddlQuerys";
 import { delet, insert, update } from "./dmlQuerys";
 import { DDL, DML, DQL, DUL } from "./commonResponses";
-import { select } from "./dqlQuerys";
+import { select, join } from "./dqlQuerys";
 import { getDatabases, getTables } from "./databaseUtils";
 
 
@@ -23,8 +23,8 @@ const dqlCommandsQuerys = {
      * @param {*} query 
      * @param {Player} player 
      */
-    "&select": (query, player) => { return select(query, player)}/* ,
-    "&join": (query, player) => { return join(query, player)} */
+    "&select": (query, player) => { return select(query, player)},
+    "&join": (query, player) => { return join(query, player)}
 }
 Object.freeze(dqlCommandsQuerys);
 const ddlCommandsQuerys = {
@@ -71,7 +71,7 @@ export const queryCommanValidation = (query) => {
 
 export const determineQuery = (query, player) => {
     const dmlCommands = ["&insert", "&update", "&delete"];
-    const dqlCommands = ["&select"/* , "&join" */];
+    const dqlCommands = ["&select", "&join"];
     const ddlCommands = ["&create", "&alter", "&drop"];
     const helpCommands = ["&dml", "&dql", "&ddl", "&dul"];
     const utilsCommands = ['&databases', "&tables"]
