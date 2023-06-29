@@ -1,9 +1,13 @@
-import { world } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
 import { determineQuery, queryCommanValidation } from "./libs/verificatios";
 
-world.afterEvents.chatSend.subscribe(({message, sender}) => {
+world.beforeEvents.chatSend.subscribe((data) => {
+    const {message, sender} = data;
     if(queryCommanValidation(message)) {
-        const output = determineQuery(message, sender);
-        sender.dimension.runCommandAsync(`tell ${sender.name} >\n§r${output}`)
+        if(sender.hasTag("config:showquery:false")) data.cancel = true;
+        system.run(() => {
+            const output = determineQuery(message, sender);
+            sender.dimension.runCommandAsync(`tell ${sender.name} >\n§r${output}`)
+        })
     }
 })
