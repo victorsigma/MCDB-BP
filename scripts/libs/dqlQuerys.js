@@ -93,7 +93,7 @@ const sortJSON = (json, sort) => {
 export const join = (query, player) => {
     //  0      1        2         3         4        5          6        7
     //&join dbName tableName1 tableName2 union conditions? projection? sort?
-    //union = {type=types,propertie:"namePropertie"}
+    //union = {type=types,propertie:"namePropertie",on:["propiedadTabla1", "propiedadTabla2"]}
     //types = "left" | "right" | "inner"
 
     const querySplit = querySplits(query);
@@ -203,32 +203,63 @@ const left = (union, tableTags1, tableTags2) => {
         });
     } else {
         // JOIN con una única propiedad
-        const propertyJoin = propertiesJoin;
+        const propertiesOn = union.hasOwnProperty('on') ? Array.isArray(union.on) ? union.on.length === 2 ? union.on : [] : [] : [];
+        // Verificar si se especificaron propiedades 'on' para la comparación
+        if (propertiesOn != []) {
+            // Lógica para JOIN con propiedades 'on'
+            tableTags1.forEach((tag1) => {
+                const json1 = JSON.parse(tag1.split("-value:")[1]);
+                const joinResults = [];
 
-        tableTags1.forEach((tag1) => {
-            const json1 = JSON.parse(tag1.split("-value:")[1]);
-            const joinResults = [];
+                tableTags2.forEach((tag2) => {
+                    const json2 = JSON.parse(tag2.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json1, json2);
 
-            tableTags2.forEach((tag2) => {
-                const json2 = JSON.parse(tag2.split("-value:")[1]);
-                const joinedJson = Object.assign({}, json1, json2);
+                    // Verificar si la propiedad de unión coincide
+                    if (json1[propertiesOn[0]] === json2[propertiesOn[1]]) {
+                        joinResults.push(joinedJson);
+                    }
+                });
 
-                // Verificar si la propiedad de unión coincide
-                if (json1[propertyJoin] === json2[propertyJoin]) {
-                    joinResults.push(joinedJson);
+                if (joinResults.length === 0) {
+                    // Agregar resultados nulos para las filas sin coincidencias
+                    const nullResult = Object.assign({}, json1);
+                    nullResult[propertiesOn[0]] = null;
+                    results.push(nullResult);
+                } else {
+                    // Agregar los resultados del JOIN
+                    results.push(...joinResults);
                 }
             });
+        } else {
+            // Lógica para JOIN con propiedad 'properties'
+            const propertyJoin = propertiesJoin;
 
-            if (joinResults.length === 0) {
-                // Agregar resultados nulos para las filas sin coincidencias
-                const nullResult = Object.assign({}, json1);
-                nullResult[propertyJoin] = null;
-                results.push(nullResult);
-            } else {
-                // Agregar los resultados del JOIN
-                results.push(...joinResults);
-            }
-        });
+            tableTags1.forEach((tag1) => {
+                const json1 = JSON.parse(tag1.split("-value:")[1]);
+                const joinResults = [];
+
+                tableTags2.forEach((tag2) => {
+                    const json2 = JSON.parse(tag2.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json1, json2);
+
+                    // Verificar si la propiedad de unión coincide
+                    if (json1[propertyJoin] === json2[propertyJoin]) {
+                        joinResults.push(joinedJson);
+                    }
+                });
+
+                if (joinResults.length === 0) {
+                    // Agregar resultados nulos para las filas sin coincidencias
+                    const nullResult = Object.assign({}, json1);
+                    nullResult[propertyJoin] = null;
+                    results.push(nullResult);
+                } else {
+                    // Agregar los resultados del JOIN
+                    results.push(...joinResults);
+                }
+            });
+        }
     }
     return results;
 };
@@ -276,32 +307,64 @@ const right = (union, tableTags1, tableTags2) => {
         });
     } else {
         // JOIN con una única propiedad
-        const propertyJoin = propertiesJoin;
+        const propertiesOn = union.hasOwnProperty('on') ? Array.isArray(union.on) ? union.on.length === 2 ? union.on : [] : [] : [];
+        // Verificar si se especificaron propiedades 'on' para la comparación
+        if (propertiesOn != []) {
+            // Lógica para JOIN con propiedades 'on'
+            tableTags2.forEach((tag2) => {
+                const json2 = JSON.parse(tag2.split("-value:")[1]);
+                const joinResults = [];
 
-        tableTags2.forEach((tag2) => {
-            const json2 = JSON.parse(tag2.split("-value:")[1]);
-            const joinResults = [];
+                tableTags1.forEach((tag1) => {
+                    const json1 = JSON.parse(tag1.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json2, json1);
 
-            tableTags1.forEach((tag1) => {
-                const json1 = JSON.parse(tag1.split("-value:")[1]);
-                const joinedJson = Object.assign({}, json2, json1);
+                    // Verificar si la propiedad de unión coincide
+                    if (json2[propertiesOn[1]] === json1[propertiesOn[0]]) {
+                        joinResults.push(joinedJson);
+                    }
+                });
 
-                // Verificar si la propiedad de unión coincide
-                if (json2[propertyJoin] === json1[propertyJoin]) {
-                    joinResults.push(joinedJson);
+                if (joinResults.length === 0) {
+                    // Agregar resultados nulos para las filas sin coincidencias
+                    const nullResult = Object.assign({}, json2);
+                    nullResult[propertiesOn[1]] = null;
+                    results.push(nullResult);
+                } else {
+                    // Agregar los resultados del JOIN
+                    results.push(...joinResults);
                 }
             });
+        }
+        else {
+            // Lógica para JOIN con propiedad 'properties'
+            const propertyJoin = propertiesJoin;
 
-            if (joinResults.length === 0) {
-                // Agregar resultados nulos para las filas sin coincidencias
-                const nullResult = Object.assign({}, json2);
-                nullResult[propertyJoin] = null;
-                results.push(nullResult);
-            } else {
-                // Agregar los resultados del JOIN
-                results.push(...joinResults);
-            }
-        });
+            tableTags2.forEach((tag2) => {
+                const json2 = JSON.parse(tag2.split("-value:")[1]);
+                const joinResults = [];
+
+                tableTags1.forEach((tag1) => {
+                    const json1 = JSON.parse(tag1.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json2, json1);
+
+                    // Verificar si la propiedad de unión coincide
+                    if (json2[propertyJoin] === json1[propertyJoin]) {
+                        joinResults.push(joinedJson);
+                    }
+                });
+
+                if (joinResults.length === 0) {
+                    // Agregar resultados nulos para las filas sin coincidencias
+                    const nullResult = Object.assign({}, json2);
+                    nullResult[propertyJoin] = null;
+                    results.push(nullResult);
+                } else {
+                    // Agregar los resultados del JOIN
+                    results.push(...joinResults);
+                }
+            });
+        }
     }
     return results;
 }
@@ -333,22 +396,42 @@ const inner = (union, tableTags1, tableTags2) => {
         });
     } else {
         // JOIN con una única propiedad
-        const propertyJoin = propertiesJoin;
+        const propertiesOn = union.hasOwnProperty('on') ? Array.isArray(union.on) ? union.on.length === 2 ? union.on : [] : [] : [];
+        // Verificar si se especificaron propiedades 'on' para la comparación
+        if (propertiesOn.length === 2) {
+            // Lógica para JOIN con propiedades 'on'
+            tableTags1.forEach((tag1) => {
+                const json1 = JSON.parse(tag1.split("-value:")[1]);
 
-        tableTags1.forEach((tag1) => {
-            const json1 = JSON.parse(tag1.split("-value:")[1]);
+                tableTags2.forEach((tag2) => {
+                    const json2 = JSON.parse(tag2.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json1, json2);
 
-            tableTags2.forEach((tag2) => {
-                const json2 = JSON.parse(tag2.split("-value:")[1]);
-                const joinedJson = Object.assign({}, json1, json2);
-
-                // Verificar si la propiedad de unión coincide
-                if (json1[propertyJoin] === json2[propertyJoin]) {
-                    results.add(joinedJson); // Agregamos el resultado al conjunto
-                }
+                    // Verificar si la propiedad de unión coincide
+                    if (json1[propertiesOn[0]] === json2[propertiesOn[1]]) {
+                        results.add(joinedJson); // Agregamos el resultado al conjunto
+                    }
+                });
             });
-        });
+        } else {
+            // Lógica para JOIN con propiedad 'properties'
+            const propertyJoin = propertiesJoin;
+
+            tableTags1.forEach((tag1) => {
+                const json1 = JSON.parse(tag1.split("-value:")[1]);
+
+                tableTags2.forEach((tag2) => {
+                    const json2 = JSON.parse(tag2.split("-value:")[1]);
+                    const joinedJson = Object.assign({}, json1, json2);
+
+                    // Verificar si la propiedad de unión coincide
+                    if (json1[propertyJoin] === json2[propertyJoin]) {
+                        results.add(joinedJson); // Agregamos el resultado al conjunto
+                    }
+                });
+            });
+        }
     }
 
     return Array.from(results); // Convertimos el conjunto en un arreglo antes de devolverlo
-}
+};

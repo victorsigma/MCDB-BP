@@ -8,6 +8,8 @@ world.beforeEvents.chatSend.subscribe((data) => {
         system.run(() => {
             const output = determineQuery(message, sender);
             sender.dimension.runCommandAsync(`tell ${sender.name} >\n§r${output}`)
+            console.warn(`§r${message}`)
+            console.warn(`§r${output}`)
         })
     }
 })
