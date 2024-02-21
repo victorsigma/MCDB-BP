@@ -1,12 +1,15 @@
+// Importación de módulos y dependencias necesarias
 import { Player } from "@minecraft/server"
-import { alter, create, drop } from "./ddlQuerys";
-import { delet, insert, update } from "./dmlQuerys";
-import { DDL, DML, DQL, DUL } from "./commonResponses";
-import { select, join } from "./dqlQuerys";
-import { getDatabases, getTables } from "./databaseUtils";
-import { showQuerys } from "./configQuerys"
+import { alter, create, drop } from "./ddlQuerys"; // Importación de funciones para consultas DDL
+import { delet, insert, update } from "./dmlQuerys"; // Importación de funciones para consultas DML
+import { DDL, DML, DQL, DUL } from "./commonResponses"; // Importación de respuestas comunes para cada tipo de consulta
+import { select, join } from "./dqlQuerys"; // Importación de funciones para consultas DQL
+import { getDatabases, getTables } from "./databaseUtils"; // Importación de utilidades para obtener información de la base de datos
+import { showQuerys } from "./configQuerys"; // Importación de funciones para mostrar consultas
 
+// Definición de objetos que contienen funciones para diferentes tipos de consultas
 
+// Objeto que contiene funciones para consultas DML (Data Manipulation Language) como insertar, actualizar o eliminar datos
 const dmlCommandsQuerys = {
     /**
      * 
@@ -17,7 +20,9 @@ const dmlCommandsQuerys = {
     "&update": (query, player) => { return update(query, player) },
     "&delete": (query, player) => { return delet(query, player) }
 }
-Object.freeze(dmlCommandsQuerys);
+Object.freeze(dmlCommandsQuerys); // Congelación del objeto para evitar modificaciones
+
+// Objeto que contiene funciones para consultas DQL (Data Query Language) como seleccionar y unir datos
 const dqlCommandsQuerys = {
     /**
      * 
@@ -27,7 +32,9 @@ const dqlCommandsQuerys = {
     "&select": (query, player) => { return select(query, player) },
     "&join": (query, player) => { return join(query, player) }
 }
-Object.freeze(dqlCommandsQuerys);
+Object.freeze(dqlCommandsQuerys); // Congelación del objeto para evitar modificaciones
+
+// Objeto que contiene funciones para consultas DDL (Data Definition Language) como crear, alterar o eliminar bases de datos y tablas
 const ddlCommandsQuerys = {
     /**
      * 
@@ -38,7 +45,9 @@ const ddlCommandsQuerys = {
     "&alter": (query, player) => { return alter(query, player) },
     "&drop": (query, player) => { return drop(query, player) }
 }
-Object.freeze(ddlCommandsQuerys);
+Object.freeze(ddlCommandsQuerys); // Congelación del objeto para evitar modificaciones
+
+// Objeto que contiene funciones para comandos de ayuda
 const helpCommandsQuerys = {
     /**
      * 
@@ -50,8 +59,9 @@ const helpCommandsQuerys = {
     "&ddl": () => { return DDL },
     "&dul": () => { return DUL }
 }
-Object.freeze(helpCommandsQuerys);
+Object.freeze(helpCommandsQuerys); // Congelación del objeto para evitar modificaciones
 
+// Objeto que contiene funciones para utilidades de consulta (obtener bases de datos y tablas)
 const utilsCommandsQuerys = {
     /**
      * 
@@ -61,22 +71,24 @@ const utilsCommandsQuerys = {
     "&databases": (_query, player) => { return getDatabases(player) },
     "&tables": (query, player) => { return getTables(query, player) }
 }
-Object.freeze(helpCommandsQuerys);
+Object.freeze(helpCommandsQuerys); // Congelación del objeto para evitar modificaciones
 
-
+// Objeto que contiene funciones para configurar consultas
 const configCommandsQuerys = {
     /**
      * 
      * @param {*} query 
      * @param {Player} player 
      */
-        "&showquery": (query, player) => { return showQuerys(query, player) },
+    "&showquery": (query, player) => { return showQuerys(query, player) },
 }
 
+// Función que valida si una consulta comienza con el carácter '&' (indicador de consulta válida)
 export const queryCommanValidation = (query) => {
     return query.startsWith('&')
 }
 
+// Función que determina el tipo de consulta y la ejecuta utilizando las funciones definidas anteriormente
 export const determineQuery = (query, player) => {
     const dmlCommands = ["&insert", "&update", "&delete"];
     const dqlCommands = ["&select", "&join"];
@@ -85,8 +97,9 @@ export const determineQuery = (query, player) => {
     const utilsCommands = ['&databases', "&tables"]
     const configCommands = ['&showquery']
 
-    const command = query.split(" ")[0]; // Get the first command in the text
+    const command = query.split(" ")[0]; // Obtener el primer comando en el texto de la consulta
 
+    // Determinar el tipo de consulta y ejecutarla utilizando las funciones correspondientes
     if (dmlCommands.includes(command)) {
         return dmlCommandsQuerys[command](query, player);
     } else if (dqlCommands.includes(command)) {
@@ -100,8 +113,6 @@ export const determineQuery = (query, player) => {
     } else if (configCommands.includes(command)) {
         return configCommandsQuerys[command](query, player)
     } else {
-        return "§2Unknown class";
+        return "§2Unknown query"; // Mensaje de error para consultas desconocidas
     }
 }
-
-
