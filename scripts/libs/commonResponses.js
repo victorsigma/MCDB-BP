@@ -19,6 +19,7 @@ export const DQL = `§gDQL Syntax:
 union = {
     "type": "left" | "right" | "inner",
     "properties": "property" | ["property1", "property2", ...]
+    "on": ["propiedadTabla1", "propiedadTabla2"]
 }`;
 
 export const DML = `§gDML Syntax:

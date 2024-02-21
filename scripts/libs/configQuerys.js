@@ -29,3 +29,13 @@ export const showQuerys = (query, player) => {
         return `§eShow Query true`
     }
 }
+
+
+export const isJSON = (output) => {
+    try {
+        JSON.parse(output);
+        return true; // La cadena es un JSON válido
+    } catch (error) {
+        return false; // La cadena no es un JSON válido
+    }
+}

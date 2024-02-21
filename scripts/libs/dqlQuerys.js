@@ -39,7 +39,7 @@ export const select = (query, player) => {
 
                     sortJSON(projectedResults, sort);
 
-                    return `§a${JSON.stringify(projectedResults)}`;
+                    return `${JSON.stringify(projectedResults)}`;
                 } else {
                     return "§6No matching values found";
                 }
@@ -144,7 +144,7 @@ export const join = (query, player) => {
                     // Ordenar los resultados si se proporciona una opción de clasificación (sort)
                     sortJSON(projectedResults, sort);
 
-                    return `§a${JSON.stringify(projectedResults)}`;
+                    return `${JSON.stringify(projectedResults)}`;
                 } else {
                     return "§6No matching values found";
                 }
@@ -398,7 +398,7 @@ const inner = (union, tableTags1, tableTags2) => {
         // JOIN con una única propiedad
         const propertiesOn = union.hasOwnProperty('on') ? Array.isArray(union.on) ? union.on.length === 2 ? union.on : [] : [] : [];
         // Verificar si se especificaron propiedades 'on' para la comparación
-        if (propertiesOn.length === 2) {
+        if (propertiesOn.length >= 2) {
             // Lógica para JOIN con propiedades 'on'
             tableTags1.forEach((tag1) => {
                 const json1 = JSON.parse(tag1.split("-value:")[1]);
