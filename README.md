@@ -28,37 +28,47 @@ El sistema se integra con el juego Minecraft y se utiliza a través de comandos 
 A continuación se muestran los comandos principales y sus opciones de ayuda:
 
 ### Comandos DDL (Data Definition Language):
-Crear Base de Datos: &create database <database_name>
-Crear Tabla: &create table <database_owner_name> <table_name> [properties]
-Modificar Tabla: &alter <database_owner_name> <table_name> [properties]
-Eliminar Base de Datos: &drop database <database_name>
-Eliminar Tabla: &drop table <database_owner_name> <table_name>
-Ayuda: &ddl
+
+- **Crear Base de Datos:** `&create database <database_name>`
+- **Crear Tabla:** `&create table <database_owner_name> <table_name> [properties]`
+- **Modificar Tabla:** `&alter <database_owner_name> <table_name> [properties]`
+- **Eliminar Base de Datos:** `&drop database <database_name>`
+- **Eliminar Tabla:** `&drop table <database_owner_name> <table_name>`
+
+Ayuda: `&ddl`
 
 ### Comandos DQL (Data Query Language):
-Seleccionar Datos: &select <database_owner_name> <table_name> [conditions] [projection] [sort]
-Unir Tablas: &join <database_owner_name> <table_name1> <table_name2> <union_type> [conditions] [projection] [sort]
-Ayuda: &dql
+
+- **Seleccionar Datos:** `&select <database_owner_name> <table_name> [conditions] [projection] [sort]`
+- **Unir Tablas:** `&join <database_owner_name> <table_name1> <table_name2> <union_type> [conditions] [projection] [sort]`
+
+Ayuda: `&dql`
 
 ### Comandos DML (Data Manipulation Language):
-Insertar Datos: &insert <database_owner_name> <table_name> <value>
-Actualizar Datos: &update <database_owner_name> <table_name> <conditions> <new_values>
-Eliminar Datos: &delete <database_owner_name> <table_name> <conditions>
-Ayuda: &dml
+
+- **Insertar Datos:** `&insert <database_owner_name> <table_name> <value>`
+- **Actualizar Datos:** `&update <database_owner_name> <table_name> <conditions> <new_values>`
+- **Eliminar Datos:** `&delete <database_owner_name> <table_name> <conditions>`
+
+Ayuda: `&dml`
 
 ### Comandos DUL (Data Utility Language):
-Listar Bases de Datos: &databases
-Listar Tablas: &tables <database_owner_name>
-Ayuda: &dul
+
+- **Listar Bases de Datos:** `&databases`
+- **Listar Tablas:** `&tables <database_owner_name>`
+
+Ayuda: `&dul`
 
 ### Comandos DBL (Data Backup Language):
-Exportar a CSV: &csv <database_owner_name> <table_name> [conditions] [projection] [sort]
-Exportar a JSON: &json <database_owner_name> <table_name> [conditions] [projection] [sort]
-Exportar a XML: &xml <database_owner_name> <table_name> [conditions] [projection] [sort]
-Ayuda: &dbl
+
+- **Exportar a CSV:** `&csv <database_owner_name> <table_name> [conditions] [projection] [sort]`
+- **Exportar a JSON:** `&json <database_owner_name> <table_name> [conditions] [projection] [sort]`
+- **Exportar a XML:** `&xml <database_owner_name> <table_name> [conditions] [projection] [sort]`
+
+Ayuda: `&dbl`
 
 ## Contribución
 Si deseas contribuir al proyecto, siéntete libre de hacerlo enviando solicitudes de extracción. Asegúrate de seguir las pautas de contribución y proporcionar una descripción clara de los cambios propuestos.
 
 ## Licencia
-Este proyecto está bajo la licencia MIT.
+Este proyecto está bajo la licencia [MIT](LICENSE).
