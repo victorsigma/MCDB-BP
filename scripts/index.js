@@ -27,10 +27,10 @@ world.beforeEvents.chatSend.subscribe((data) => {
                 //shell.log("Output", output, 1)
 
                 // Envío del mensaje formateado al remitente dentro del mismo contexto de dimensión
-                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§r${form}`);
+                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${form}`);
             } else {
                 // Si no es JSON, envía la salida directamente al remitente dentro del mismo contexto de dimensión
-                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§r${output}`);
+                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${output}`);
             }
         });
     }
