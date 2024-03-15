@@ -61,6 +61,3 @@ Ayuda: `&dul`
 
 ## Contribución
 Si deseas contribuir al proyecto, siéntete libre de hacerlo enviando solicitudes de extracción. Asegúrate de seguir las pautas de contribución y proporcionar una descripción clara de los cambios propuestos.
-
-## Licencia
-Este proyecto está bajo la licencia [MIT](LICENSE).
