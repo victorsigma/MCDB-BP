@@ -43,3 +43,9 @@ export const DML = `§gDML Syntax:
 export const DUL = `§gDUL Syntax:
 §b&databases
 §b&tables §edatabase_owner_name`;
+
+// Ayuda para consultas DBL (Data Backup Language) para exportar información de tablas
+export const DBL = `§gDBL Syntax:
+§b&csv §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?
+§b&json §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?
+§b&xml §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?`;

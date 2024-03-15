@@ -19,7 +19,6 @@ world.beforeEvents.chatSend.subscribe((data) => {
         system.run(() => {
             // Determinación de la consulta a realizar a partir del mensaje y el remitente
             const output = determineQuery(message, sender);
-            
             // Verificación si la salida es un objeto JSON
             if (isJSON(output)) {
                 // Formateo de la salida JSON

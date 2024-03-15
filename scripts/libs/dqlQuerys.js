@@ -68,7 +68,7 @@ export const select = (query, player) => {
 };
 
 // Función para aplicar la proyección a un objeto JSON
-const projectJSON = (json, projection) => {
+export const projectJSON = (json, projection) => {
     // Verificar si se debe proyectar todo el objeto JSON
     if (!projection || projection.all || Object.keys(projection).length === 0) {
         return json; // Devolver el objeto JSON sin cambios si no se especifica una proyección o si se solicita toda la proyección
@@ -88,7 +88,7 @@ const projectJSON = (json, projection) => {
 };
 
 // Función para ordenar un array de objetos JSON
-const sortJSON = (json, sort) => {
+export const sortJSON = (json, sort) => {
     if (Object.keys(sort).length > 0) {
         return json.sort((a, b) => {
             for (const prop in sort) {
