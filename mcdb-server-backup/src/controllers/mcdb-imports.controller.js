@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { csvToJson } from '../libs/csvManager';
-import { xml2js } from 'xml-js';
 
 export const importTableValues = async (req, res) => {
     const { file, file_type } = req.body;
@@ -41,7 +40,7 @@ export const importTableValues = async (req, res) => {
         res.status(200).json({ message: 'File found' });
     } catch (error) {
         // El archivo no existe o no se puede acceder
-        console.error(`Error accessing file: ${file}`, error);
-        res.status(404).json({ error: 'File not found or inaccessible' });
+        //console.error(`Error accessing file: ${file}`, error);
+        res.status(404).json({ message: 'File not found or inaccessible' });
     }
 }

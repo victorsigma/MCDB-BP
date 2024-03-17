@@ -30,8 +30,8 @@ A continuación se muestran los comandos principales y sus opciones de ayuda:
 ### Comandos DDL (Data Definition Language):
 
 - **Crear Base de Datos:** `&create database <database_name>`
-- **Crear Tabla:** `&create table <database_owner_name> <table_name> [properties]`
-- **Modificar Tabla:** `&alter <database_owner_name> <table_name> [properties]`
+- **Crear Tabla:** `&create table <database_owner_name> <table_name> {properties}`
+- **Modificar Tabla:** `&alter <database_owner_name> <table_name> {properties}`
 - **Eliminar Base de Datos:** `&drop database <database_name>`
 - **Eliminar Tabla:** `&drop table <database_owner_name> <table_name>`
 
@@ -39,8 +39,8 @@ Ayuda: `&ddl`
 
 ### Comandos DQL (Data Query Language):
 
-- **Seleccionar Datos:** `&select <database_owner_name> <table_name> [conditions] [projection] [sort]`
-- **Unir Tablas:** `&join <database_owner_name> <table_name1> <table_name2> <union_type> [conditions] [projection] [sort]`
+- **Seleccionar Datos:** `&select <database_owner_name> <table_name> {conditions} {projection} {sort}`
+- **Unir Tablas:** `&join <database_owner_name> <table_name1> <table_name2> <union_type> {conditions} {projection} {sort}`
 
 Ayuda: `&dql`
 
@@ -61,9 +61,15 @@ Ayuda: `&dul`
 
 ### Comandos DBL (Data Backup Language):
 
-- **Exportar a CSV:** `&csv <database_owner_name> <table_name> [conditions] [projection] [sort]`
-- **Exportar a JSON:** `&json <database_owner_name> <table_name> [conditions] [projection] [sort]`
-- **Exportar a XML:** `&xml <database_owner_name> <table_name> [conditions] [projection] [sort]`
+- **Exportar a CSV:** `&csv <database_owner_name> <table_name> {conditions} {projection} {sort}`
+- **Exportar a JSON:** `&json <database_owner_name> <table_name> {conditions} {projection} {sort}`
+- **Exportar a XML:** `&xml <database_owner_name> <table_name> {conditions} {projection} {sort}`
+- **Importar desde archivo:** `&import <database_owner_name> <table_name> file=<filename> filetype=<filetype>`
+
+Ejemplo:
+`&import <database_owner_name> <table_name> file=file.csv filetype=csv`
+
+`filetype = csv | json | xml`
 
 Ayuda: `&dbl`
 

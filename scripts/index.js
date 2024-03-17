@@ -21,16 +21,20 @@ world.beforeEvents.chatSend.subscribe((data) => {
             const output = await determineQuery(message, sender);
 
             // Verificación si la salida es un objeto JSON
-            if (isJSON(output)) {
-                // Formateo de la salida JSON
-                const form = format(JSON.parse(output));
-                //shell.log("Output", output, 1)
-
-                // Envío del mensaje formateado al remitente dentro del mismo contexto de dimensión
-                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${form}`);
-            } else {
-                // Si no es JSON, envía la salida directamente al remitente dentro del mismo contexto de dimensión
-                sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${output}`);
+            try {
+                if (isJSON(output)) {
+                    // Formateo de la salida JSON
+                    const form = format(JSON.parse(output));
+                    //shell.log("Output", output, 1)
+    
+                    // Envío del mensaje formateado al remitente dentro del mismo contexto de dimensión
+                    sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${form}`);
+                } else {
+                    // Si no es JSON, envía la salida directamente al remitente dentro del mismo contexto de dimensión
+                    sender.dimension.runCommandAsync(`tell ${sender.name} >\n§rMCDB-Server: ${output}`);
+                }
+            } catch (error) {
+                shell.log(error)
             }
         });
     }

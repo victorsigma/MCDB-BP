@@ -48,4 +48,9 @@ export const DUL = `§gDUL Syntax:
 export const DBL = `§gDBL Syntax:
 §b&csv §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?
 §b&json §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?
-§b&xml §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?`;
+§b&xml §edatabase_owner_name §ctable_name §cconditions? §eprojection? §csort?
+§b&import §edatabase_owner_name §ctable_name §cfile §efiletype
+
+example:
+§b&import §edatabase_owner_name §ctable_name §cfile=file.csv §efiletype=csv
+§bfiletype = csv | json | xml`;

@@ -117,9 +117,9 @@ export const importTableValues = async (query, player) => {
 
                     return `§a${count} value(s) inserted`
                 } else {
-                    shell.log(`no valid value`)
+                    shell.log(response)
+                    return  JSON.parse(response).message;
                 }
-                return 'ok';
             } else {
                 return INVALID_DB; // Devolver mensaje si la base de datos no existe
             }
