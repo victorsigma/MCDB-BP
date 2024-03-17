@@ -1,4 +1,4 @@
-import { INVALID_QUERY, INVALID_DB } from './commonResponses';
+import { INVALID_QUERY, INVALID_DB, NO_MATCH } from './commonResponses';
 import { querySplits } from './databaseUtils';
 import { tableExists } from "./ddlQuerys";
 

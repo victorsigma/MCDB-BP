@@ -6,7 +6,7 @@ import { DBL, DDL, DML, DQL, DUL } from "./commonResponses"; // Importación de 
 import { select, join } from "./dqlQuerys"; // Importación de funciones para consultas DQL
 import { getDatabases, getTables } from "./databaseUtils"; // Importación de utilidades para obtener información de la base de datos
 import { showQuerys } from "./configQuerys"; // Importación de funciones para mostrar consultas
-import { exportTable } from "./exportQuerys";
+import { exportTable, importTableValues } from "./backupQuerys";
 
 // Definición de objetos que contienen funciones para diferentes tipos de consultas
 
@@ -85,7 +85,7 @@ const configCommandsQuerys = {
     "&showquery": (query, player) => { return showQuerys(query, player) },
 }
 
-const exportCommandsQuerys = {
+const backupCommandsQuerys = {
     /**
      * 
      * @param {*} query 
@@ -94,6 +94,7 @@ const exportCommandsQuerys = {
     "&csv": (query, player) => { return exportTable(query, player) },
     "&json": (query, player) => { return exportTable(query, player) },
     "&xml": (query, player) => { return exportTable(query, player) },
+    "&import": async (query, player) => { return importTableValues(query, player)},
 }
 
 // Función que valida si una consulta comienza con el carácter '&' (indicador de consulta válida)
@@ -109,7 +110,7 @@ export const determineQuery = (query, player) => {
     const helpCommands = ["&dml", "&dql", "&ddl", "&dul", "&dbl"];
     const utilsCommands = ['&databases', "&tables"]
     const configCommands = ['&showquery']
-    const exportCommands = ['&csv', '&json', '&xml']
+    const backupCommands = ['&csv', '&json', '&xml', '&import']
 
     const command = query.split(" ")[0]; // Obtener el primer comando en el texto de la consulta
 
@@ -126,8 +127,8 @@ export const determineQuery = (query, player) => {
         return utilsCommandsQuerys[command](query, player)
     } else if (configCommands.includes(command)) {
         return configCommandsQuerys[command](query, player)
-    } else if (exportCommands.includes(command)) {
-        return exportCommandsQuerys[command](query, player)
+    } else if (backupCommands.includes(command)) {
+        return backupCommandsQuerys[command](query, player)
     } else {
         return "§2Unknown query"; // Mensaje de error para consultas desconocidas
     }

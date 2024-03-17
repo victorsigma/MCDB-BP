@@ -16,9 +16,10 @@ world.beforeEvents.chatSend.subscribe((data) => {
         if (sender.hasTag("config:showquery:false")) data.cancel = true;
         
         // Ejecución de un bloque de código en el sistema de Minecraft
-        system.run(() => {
+        system.run(async () => {
             // Determinación de la consulta a realizar a partir del mensaje y el remitente
-            const output = determineQuery(message, sender);
+            const output = await determineQuery(message, sender);
+
             // Verificación si la salida es un objeto JSON
             if (isJSON(output)) {
                 // Formateo de la salida JSON
