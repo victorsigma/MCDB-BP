@@ -39,8 +39,13 @@ Ayuda: `&ddl`
 
 ### Comandos DQL (Data Query Language):
 
-- **Seleccionar Datos:** `&select <database_owner_name> <table_name> [conditions] [projection] [sort]`
-- **Unir Tablas:** `&join <database_owner_name> <table_name1> <table_name2> <union_type> [conditions] [projection] [sort]`
+- **Seleccionar Datos:** `&select <database_owner_name> <table_name> {conditions} {projection} {sort}`
+- **Unir Tablas:** `&join <database_owner_name> <table_name1> <table_name2> <union> {conditions} {projection} {sort}`
+
+`union  = {
+    "type": "left" | "right" | "inner",
+    "properties": "property" | ["property1", "property2", ...] | "on": ["propiedadTabla1", "propiedadTabla2"]
+}`
 
 Ayuda: `&dql`
 
