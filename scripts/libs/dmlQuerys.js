@@ -1,6 +1,5 @@
 import { INVALID_QUERY, INVALID_DB, NO_MATCH } from './commonResponses';
-import { querySplits } from './databaseUtils';
-import { tableExists } from "./ddlQuerys";
+import { querySplits, tableExists, compareJSON } from './databaseUtils';
 
 // Función para insertar valores en una tabla existente
 export const insert = (query, player) => {
@@ -193,25 +192,4 @@ export const delet = (query, player) => {
     } else {
         return INVALID_QUERY; // Devolver mensaje si la consulta no es válida
     }
-};
-
-// Función para comparar dos objetos JSON
-export const compareJSON = (json1, json2) => {
-    const keys1 = Object.keys(json1);
-    const keys2 = Object.keys(json2);
-
-    let count = 0; // Contador de coincidencias
-
-    // Iterar sobre las claves del primer JSON
-    for (const key of keys1) {
-        const value1 = json1[key];
-        const value2 = json2[key];
-
-        if (value1 === value2) {
-            count++; // Incrementar el contador si los valores son iguales
-        }
-    }
-
-    // Verificar si el contador es igual a la cantidad de propiedades en el segundo JSON
-    return count === keys2.length; // Devolver true si son iguales, false de lo contrario
 };

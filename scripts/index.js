@@ -24,6 +24,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
             try {
                 if (isJSON(output)) {
                     // Formateo de la salida JSON
+                    //shell.log(output)
                     const form = format(JSON.parse(output));
                     //shell.log("Output", output, 1)
     

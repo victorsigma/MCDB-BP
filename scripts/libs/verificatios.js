@@ -6,7 +6,7 @@ import { DBL, DDL, DML, DQL, DUL } from "./commonResponses"; // Importación de 
 import { select, join } from "./dqlQuerys"; // Importación de funciones para consultas DQL
 import { getDatabases, getTables } from "./databaseUtils"; // Importación de utilidades para obtener información de la base de datos
 import { showQuerys } from "./configQuerys"; // Importación de funciones para mostrar consultas
-import { exportTable, importTableValues } from "./dblQuerys";
+import { backupDatabase, exportTable, importTableValues } from "./dblQuerys";
 
 // Definición de objetos que contienen funciones para diferentes tipos de consultas
 
@@ -94,7 +94,8 @@ const dblCommandsQuerys = {
     "&csv": (query, player) => { return exportTable(query, player) },
     "&json": (query, player) => { return exportTable(query, player) },
     "&xml": (query, player) => { return exportTable(query, player) },
-    "&import": async (query, player) => { return importTableValues(query, player)},
+    "&import": async (query, player) => { return importTableValues(query, player) },
+    "&backup": async (query, player) => { return backupDatabase(query, player) }
 }
 
 // Función que valida si una consulta comienza con el carácter '&' (indicador de consulta válida)
@@ -110,7 +111,7 @@ export const determineQuery = (query, player) => {
     const helpCommands = ["&dml", "&dql", "&ddl", "&dul", "&dbl"];
     const utilsCommands = ['&databases', "&tables"]
     const configCommands = ['&showquery']
-    const dblCommands = ['&csv', '&json', '&xml', '&import']
+    const dblCommands = ['&csv', '&json', '&xml', '&import', '&backup']
 
     const command = query.split(" ")[0]; // Obtener el primer comando en el texto de la consulta
 

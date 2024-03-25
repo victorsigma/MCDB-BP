@@ -1,8 +1,7 @@
 import { HttpRequest, HttpHeader, HttpRequestMethod, http } from '@minecraft/server-net';
 import { INVALID_QUERY, INVALID_DB, INVALID_TABLE, INVALID_JOIN } from './commonResponses'; // Importar respuestas de consulta no válidas
-import { querySplits } from './databaseUtils'; // Importar función de división de consulta
-import { tableExists } from "./ddlQuerys"; // Importar función de verificación de existencia de tabla en la base de datos
-import { compareJSON, insert } from './dmlQuerys'; // Importar función de comparación de objetos JSON
+import { querySplits, databaseExists, tableExists, compareJSON, convertToBackup } from './databaseUtils'; // Importar función de división de consulta
+import { insert } from './dmlQuerys'; // Importar función de comparación de objetos JSON
 import { projectJSON, sortJSON } from './dqlQuerys';
 import { shell } from './bedrockSystem';
 
@@ -72,7 +71,7 @@ export const exportTable = (query, player) => {
                     return "§6No matching values found"; // Devolver mensaje si no se encontraron valores coincidentes
                 }
             } else {
-                return INVALID_DB; // Devolver mensaje si la base de datos no existe
+                return INVALID_TABLE; // Devolver mensaje si la base de datos no existe
             }
         } catch (error) {
             return INVALID_QUERY; // Devolver mensaje si ocurre un error al analizar la consulta
@@ -121,7 +120,7 @@ export const importTableValues = async (query, player) => {
                     return  JSON.parse(response).message;
                 }
             } else {
-                return INVALID_DB; // Devolver mensaje si la base de datos no existe
+                return INVALID_TABLE; // Devolver mensaje si la base de datos no existe
             }
         } catch (error) {
             shell.log(error);
@@ -133,6 +132,58 @@ export const importTableValues = async (query, player) => {
 };
 
 
+export const backupDatabase = (query, player) => {
+    // &backup database_name
+    // Dividir la consulta en partes
+    const querySplit = querySplits(query);
+
+    // Verificar si hay suficientes partes en la consulta
+
+    if(querySplit.length === 2) {
+        try {
+            const dbName = querySplit[1];
+            if(databaseExists(dbName, player)) {
+                const databaseData = player.getTags().filter((tag) => {
+                    const tagSplit = tag.split("-");
+                    return (
+                        tagSplit.length >= 2 &&
+                        tagSplit[0] === `db:${dbName}`
+                    );
+                });
+
+                shell.log(databaseData);
+
+                const backup = convertToBackup(databaseData);
+                sendBackup(backup);
+                return `${JSON.stringify(backup)}`;
+            } else {
+                return INVALID_DB;
+            }
+        } catch (error) {
+            shell.log(error);
+            return INVALID_QUERY; // Devolver mensaje si ocurre un error al analizar la consulta
+        }
+    } else {
+        return INVALID_QUERY; // Devolver mensaje si la consulta no tiene suficientes partes
+    }
+}
+
+const sendBackup = async (backup) => {
+    const req = new HttpRequest('http://localhost:3000/api/backup');
+
+
+    req.setBody(JSON.stringify(backup));
+
+    req.method = HttpRequestMethod.Post;
+
+    req.headers = [
+        new HttpHeader('Content-Type', 'application/json'),
+    ];
+
+    const response = await http.request(req);
+
+    return response.body;
+}
 
 const csvExport = async (body) => {
     const req = new HttpRequest('http://localhost:3000/api/export/csv');

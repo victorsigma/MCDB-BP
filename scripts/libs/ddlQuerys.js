@@ -1,5 +1,6 @@
 // Importación de respuestas comunes y función utilitaria
 import { INVALID_QUERY, INVALID_DB, DB, TABLE } from './commonResponses'
+import { tableExists } from './databaseUtils';
 import { querySplits } from './databaseUtils';
 
 // Función para crear bases de datos y tablas
@@ -87,22 +88,6 @@ const alterTable = (dbName, tableName, properties, player, tbl) => {
     }
 
     return "§aTable altered"; // Devolver mensaje de tabla alterada
-};
-
-
-// Función para verificar si una tabla existe
-export const tableExists = (dbName, tableName, player) => {
-    // Filtrar las etiquetas del jugador para encontrar las correspondientes a la tabla especificada
-    const existingTables = player.getTags().filter((tag) => {
-        const tagSplit = tag.split("-");
-        return (
-            tagSplit.length >= 2 &&
-            tagSplit[0] === `db:${dbName}` &&
-            tagSplit[1] === `tbl:${tableName}`
-        );
-    });
-
-    return existingTables.length > 0; // Devolver verdadero si se encontraron etiquetas, falso de lo contrario
 };
 
 // Función para validar propiedades de una tabla

@@ -47,7 +47,7 @@ export const exportJson = async (req, res) => {
         }, '');
 
         const filename = path.join(dir, Date.now() + '.json');
-        fs.writeFileSync(filename, JSON.stringify(json));
+        fs.writeFileSync(filename, JSON.stringify(json, null, 2));
 
         res.status(200).send({ 'message': 'Archivo JSON guardado correctamente' });
     } catch (error) {

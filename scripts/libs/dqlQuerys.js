@@ -1,7 +1,5 @@
 import { INVALID_QUERY, INVALID_DB, INVALID_TABLE, INVALID_JOIN } from './commonResponses'; // Importar respuestas de consulta no válidas
-import { querySplits } from './databaseUtils'; // Importar función de división de consulta
-import { tableExists } from "./ddlQuerys"; // Importar función de verificación de existencia de tabla en la base de datos
-import { compareJSON } from './dmlQuerys'; // Importar función de comparación de objetos JSON
+import { querySplits, tableExists, compareJSON } from './databaseUtils'; // Importar función de división de consulta
 
 // Función para realizar una consulta SELECT en la base de datos
 export const select = (query, player) => {
