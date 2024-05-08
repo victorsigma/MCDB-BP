@@ -48,6 +48,11 @@ const extractJsons = (query) => {
 };
 
 // Función para dividir una consulta teniendo en cuenta los JSON
+/**
+ * 
+ * @param {String} query 
+ * @returns {Array<string>} 
+ */
 export const querySplits = (query) => {
     const { modifiedQuery, jsons } = extractJsons(query); // Extraer JSON de la consulta y reemplazarlos con un marcador
     const split = modifiedQuery.split(' '); // Dividir la consulta modificada en partes por espacios
@@ -159,3 +164,17 @@ export const tagsSplits = (tag) => {
 
     return finalSplit; // Devolver la lista dividida final
 };
+
+/**
+ * Función para verificar si una cadena es un JSON válido
+ * @param {string} input 
+ * @returns {boolean}
+ */
+export const isJSON = (input) => {
+    try {
+        JSON.parse(input);
+        return true; // La cadena es un JSON válido
+    } catch (error) {
+        return false; // La cadena no es un JSON válido
+    }
+}

@@ -1,7 +1,7 @@
 import { Parser } from 'json2csv';
-import { js2xml } from 'xml-js';
 import fs from 'fs';
 import path from 'path';
+import { jsonToXml } from '../libs/xmlManager';
 
 export const exportCsv = async (req, res) => {
     try {
@@ -60,7 +60,7 @@ export const exportJson = async (req, res) => {
 export const exportXml = async (req, res) => {
     try {
         const json = req.body;
-        const xml = js2xml(json, { compact: true, spaces: 4 });
+        const xml = jsonToXml(json);
         console.log(xml);
 
         const dir = 'exports/xml';

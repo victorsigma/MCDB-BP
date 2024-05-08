@@ -78,5 +78,26 @@ Ejemplo:
 
 Ayuda: `&dbl`
 
+### Comandos de Seguridad:
+
+- **Habilitar o Deshabilitar Seguridad:** `&enablesecurity <boolean>`
+- **Verificar Seguridad:** `&enablesecurity`
+- **Iniciar Sesión:** `&login {"user": "username", "password": "userpassword"}`
+
+## Configuracion del Archivo `app.properties`
+
+- **Puerto del Servidor Back-End:** `app.port`
+Ejemplo: `app.port=3000`
+
+- **Primer Usuario:** `security.user`
+  Ejemplo: `security.user=root`
+
+- **Contraseña:** `security.password`
+  Ejemplo: `security.password=root pass`
+
+- **Clave de Seguridad:** `security.key`
+  Ejemplo: `security.key=52a78c81-67d9-4cad-8e35-f0ce3dd179be`
+
+
 ## Contribución
 Si deseas contribuir al proyecto, siéntete libre de hacerlo enviando solicitudes de extracción. Asegúrate de seguir las pautas de contribución y proporcionar una descripción clara de los cambios propuestos.

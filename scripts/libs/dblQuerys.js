@@ -1,3 +1,4 @@
+import { Player } from '@minecraft/server';
 import { HttpRequest, HttpHeader, HttpRequestMethod, http } from '@minecraft/server-net';
 import { INVALID_QUERY, INVALID_DB, INVALID_TABLE, INVALID_JOIN } from './commonResponses'; // Importar respuestas de consulta no válidas
 import { querySplits, databaseExists, tableExists, compareJSON, convertToBackup } from './databaseUtils'; // Importar función de división de consulta
@@ -5,7 +6,10 @@ import { insert } from './dmlQuerys'; // Importar función de comparación de ob
 import { projectJSON, sortJSON } from './dqlQuerys';
 import { shell } from './bedrockSystem';
 
-
+/**
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const exportTable = (query, player) => {
     // &csv/json/xml dbName tableName conditions projection sort
     // Dividir la consulta en partes
@@ -81,6 +85,10 @@ export const exportTable = (query, player) => {
     }
 };
 
+/**
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const importTableValues = async (query, player) => {
     // &import database_owner_name table_name file=export/json/1710625642341.json filetype=json
     // Dividir la consulta en partes
@@ -131,7 +139,10 @@ export const importTableValues = async (query, player) => {
     }
 };
 
-
+/**
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const backupDatabase = (query, player) => {
     // &backup database_name
     // Dividir la consulta en partes

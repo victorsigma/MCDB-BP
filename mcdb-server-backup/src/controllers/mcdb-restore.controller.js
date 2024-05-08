@@ -1,13 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import { csvToJson } from '../libs/csvManager';
-import { xmlToJson } from '../libs/xmlManager';
-
-export const importTableValues = async (req, res) => {
-    const { file, file_type } = req.body;
+export const restoreBackup = async (req, res) => {
+    const { file } = req.body;
 
     // Ruta del archivo en la raíz del servidor
     const filePath = path.join(__dirname, '..', '..', file);
+
 
     try {
         // Verificar si el archivo existe
@@ -31,10 +27,7 @@ export const importTableValues = async (req, res) => {
             return res.status(200).json(csvToJson(fileContent));
         } else if (file_type === 'xml') {
             // Leer el contenido del archivo XML
-            const fileContent = await fs.promises.readFile(filePath, 'utf-8');
-            console.log(xmlToJson(fileContent));
-
-            return res.status(200).json(xmlToJson(fileContent));
+            return res.status(200).json( { message: 'Importing from XML files is not currently supported.' })
         } else {
             return res.status(200).json({ message: 'File found' });
         }
@@ -43,7 +36,6 @@ export const importTableValues = async (req, res) => {
 
         res.status(200).json({ message: 'File found' });
     } catch (error) {
-        console.log(error);
         // El archivo no existe o no se puede acceder
         //console.error(`Error accessing file: ${file}`, error);
         res.status(404).json({ message: 'File not found or inaccessible' });

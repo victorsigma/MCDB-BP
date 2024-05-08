@@ -1,9 +1,14 @@
 // Importación de respuestas comunes y función utilitaria
+import { Player } from '@minecraft/server';
 import { INVALID_QUERY, INVALID_DB, DB, TABLE } from './commonResponses'
 import { tableExists } from './databaseUtils';
 import { querySplits } from './databaseUtils';
 
-// Función para crear bases de datos y tablas
+/**
+ * Función para crear bases de datos y tablas
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const create = (query, player) => {
     // Dividir la consulta en partes
     const querySplit = querySplits(query);
@@ -124,7 +129,11 @@ const isValidProperties = (properties) => {
 };
 
 
-// Función para alterar tablas existentes
+/**
+ * Función para alterar tablas existentes
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const alter = (query, player) => {
     // Dividir la consulta en partes
     const querySplit = querySplits(query);
@@ -164,7 +173,11 @@ export const alter = (query, player) => {
     }
 };
 
-// Función para eliminar bases de datos o tablas
+/**
+ * Función para eliminar bases de datos o tablas
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const drop = (query, player) => {
     const querySplit = querySplits(query);
     // Comprobar si la consulta es para eliminar una base de datos
@@ -172,6 +185,7 @@ export const drop = (query, player) => {
         if (querySplit.length === 3) {
             const dbName = querySplit[2];
             // Verificar si el jugador tiene la etiqueta de la base de datos especificada
+            if(dbName == 'security') return '§4Administrative database cannot be deleted'
             if (player.hasTag(`db:${dbName}`)) {
                 // Filtrar las etiquetas del jugador para encontrar las correspondientes a la base de datos especificada
                 const db = player.getTags().filter((tag) => {

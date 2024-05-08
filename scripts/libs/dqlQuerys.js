@@ -1,7 +1,13 @@
+import { Player } from '@minecraft/server';
 import { INVALID_QUERY, INVALID_DB, INVALID_TABLE, INVALID_JOIN } from './commonResponses'; // Importar respuestas de consulta no válidas
 import { querySplits, tableExists, compareJSON } from './databaseUtils'; // Importar función de división de consulta
 
-// Función para realizar una consulta SELECT en la base de datos
+/**
+ * Función para realizar una consulta SELECT en la base de datos
+ * @param {string} query 
+ * @param {Player} player 
+ * @returns
+ */
 export const select = (query, player) => {
     // &select dbName tableName conditions projection sort
     // Dividir la consulta en partes
@@ -65,7 +71,11 @@ export const select = (query, player) => {
     }
 };
 
-// Función para aplicar la proyección a un objeto JSON
+/**
+ * Función para aplicar la proyección a un objeto JSON
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const projectJSON = (json, projection) => {
     // Verificar si se debe proyectar todo el objeto JSON
     if (!projection || projection.all || Object.keys(projection).length === 0) {
@@ -103,7 +113,14 @@ export const sortJSON = (json, sort) => {
     }
 }
 
-// Función para realizar una consulta JOIN en la base de datos
+/**
+ * Función para realizar una consulta JOIN en la base de datos
+ * &join dbName tableName1 tableName2 union conditions? projection? sort?
+ * union = {type=types,propertie:"namePropertie",on:["propiedadTabla1", "propiedadTabla2"]}
+ * types = "left" | "right" | "inner"
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const join = (query, player) => {
     //  0      1        2         3         4        5          6        7
     //&join dbName tableName1 tableName2 union conditions? projection? sort?

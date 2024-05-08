@@ -1,5 +1,5 @@
 let type = 'r'
-const noColor = false;
+const noColor = true;
 const defaultOptions = {
     maxDepth: Infinity,
     lineLength: 40,

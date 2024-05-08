@@ -1,7 +1,12 @@
+import { Player } from '@minecraft/server';
 import { INVALID_QUERY, INVALID_DB, NO_MATCH } from './commonResponses';
 import { querySplits, tableExists, compareJSON } from './databaseUtils';
 
-// Función para insertar valores en una tabla existente
+/**
+ * Función para insertar valores en una tabla existente
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const insert = (query, player) => {
     //&insert dbName tableName value
     // Dividir la consulta en partes
@@ -74,7 +79,11 @@ const validateValue = (value, tableProperties) => {
     }
 }
 
-// Función para actualizar valores en una tabla existente
+/**
+ * Función para actualizar valores en una tabla existente
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const update = (query, player) => {
     // &update dbName tableName conditions newValues
     // Dividir la consulta en partes
@@ -147,7 +156,11 @@ const updateJSON = (json1, json2) => {
     return json1; // Devolver el JSON actualizado
 };
 
-// Función para eliminar valores de una tabla
+/**
+ * Función para eliminar valores de una tabla
+ * @param {string} query 
+ * @param {Player} player 
+ */
 export const delet = (query, player) => {
     //&delete dbName tableName datos
     // Dividir la consulta en partes
